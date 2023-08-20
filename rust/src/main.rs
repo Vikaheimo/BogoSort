@@ -25,10 +25,7 @@ fn shuffle(list: &mut [i32]) {
 }
 
 fn is_sorted(list: &[i32]) -> bool {
-    list.iter()
-        .skip(1)
-        .zip(list.iter())
-        .all(|(first, last)| first >= last)
+    list.windows(2).all(|pair| pair[0] <= pair[1])
 }
 
 fn generate_random_list(length: i32) -> Vec<i32> {
