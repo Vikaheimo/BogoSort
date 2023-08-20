@@ -1,5 +1,3 @@
-
-
 fn main() {
     bogo_sort(8, 100);
 }
@@ -8,7 +6,7 @@ fn bogo_sort(length: i32, print_iterations_every: i32) {
     let mut iteration: i32 = 0;
     let mut list: Vec<i32> = generate_random_list(length);
     print_iteration(&list, iteration);
-    while !is_sorted(&list, length) {
+    while !is_sorted(&list) {
         iteration += 1;
         shuffle(&mut list, length);
         if iteration % print_iterations_every == 0 {
@@ -26,13 +24,11 @@ fn shuffle(list: &mut [i32], length: i32) {
     }
 }
 
-fn is_sorted(list: &[i32], length: i32) -> bool {
-    for n in 1..length {
-        if list[(n - 1) as usize] > list[n as usize] {
-            return false;
-        }
-    }
-    true
+fn is_sorted(list: &[i32]) -> bool {
+    list.iter()
+        .skip(1)
+        .zip(list.iter())
+        .all(|(first, last)| first >= last)
 }
 
 fn generate_random_list(length: i32) -> Vec<i32> {
@@ -41,4 +37,15 @@ fn generate_random_list(length: i32) -> Vec<i32> {
 
 fn print_iteration(list: &[i32], iteration: i32) {
     println!("{:?}, {:?}", iteration, list);
+}
+
+#[cfg(test)]
+mod test {
+    use super::is_sorted;
+
+    #[test]
+    fn is_sorted_is_ok() {
+        assert!(is_sorted(&[1]));
+        assert!(is_sorted(&[1, 2, 2, 3]));
+    }
 }
