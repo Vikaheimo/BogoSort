@@ -2,9 +2,9 @@ fn main() {
     bogo_sort(8, 100);
 }
 
-fn bogo_sort(length: i32, print_iterations_every: i32) {
+fn bogo_sort(length: usize, print_iterations_every: i32) {
     let mut iteration: i32 = 0;
-    let mut list: Vec<i32> = generate_random_list(length);
+    let mut list= generate_random_list(length);
     print_iteration(&list, iteration);
     while !is_sorted(&list) {
         iteration += 1;
@@ -28,12 +28,12 @@ fn is_sorted(list: &[i32]) -> bool {
     list.windows(2).all(|pair| pair[0] <= pair[1])
 }
 
-fn generate_random_list(length: i32) -> Vec<i32> {
+fn generate_random_list(length: usize) -> Vec<i32> {
     (0..length).map(|_| rand::random()).collect()
 }
 
 fn print_iteration(list: &[i32], iteration: i32) {
-    println!("{:?}, {:?}", iteration, list);
+    println!("{iteration}, {list:?}");
 }
 
 #[cfg(test)]
